@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Описание локации</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 16px;
+        }
+        h2 {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 5px;
+            background: #333;
+            border-radius: 3px;
+        }
+        a {
+            color: #00b7ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="location-name">Название локации</h1>
+    <p id="location-description">Описание будет здесь...</p>
+    <h2>Мутанты в локации</h2>
+    <ul id="location-mutants"></ul>
+    <a href="index.html">Вернуться на карту</a>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationId = urlParams.get('id');
+
+        const locations = {
+            "nwaf": {
+                name: "Северо-западный аэродром",
+                description: "Это крупная военная база с высокоуровневым лутом, включая оружие и военное снаряжение. Будьте осторожны — зона часто посещается игроками.",
+                mutants: ["Зомби-солдат", "Бронированный мутант", "Быстрый инфицированный"]
+            },
+            "cherno": {
+                name: "Черногорск",
+                description: "Большой прибрежный город с базовым лутом: еда, одежда, простое оружие. Отличное место для новичков, но много зомби.",
+                mutants: ["Обычный зомби", "Крикун", "Паук-мутант"]
+            },
+            "elektro": {
+                name: "Электрозаводск",
+                description: "Промышленный город на юге карты. Здесь можно найти инструменты, технику и средний лут. Популярное место для встреч игроков.",
+                mutants: ["Заводской зомби", "Электрический мутант", "Тяжёлый инфицированный"]
+            }
+        };
+
+        if (locationId && locations[locationId]) {
+            const location = locations[locationId];
+            document.getElementById('location-name').textContent = location.name;
+            document.getElementById('location-description').textContent = location.description;
+
+            const mutantsList = document.getElementById('location-mutants');
+            location.mutants.forEach(mutant => {
+                const li = document.createElement('li');
+                li.textContent = mutant;
+                mutantsList.appendChild(li);
+            });
+        } else {
+            document.getElementById('location-name').textContent = "Локация не найдена";
+            document.getElementById('location-description').textContent = "Проверьте ссылку или вернитесь на карту.";
+            document.getElementById('location-mutants').innerHTML = '<li>Нет данных о мутантах</li>';
+        }
+    </script>
+</body>
+</html>
